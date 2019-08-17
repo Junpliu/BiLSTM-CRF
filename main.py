@@ -4,27 +4,28 @@ import torch.optim as optim
 import time
 from getData import dataloader
 import os
+from optparse import OptionParser
 
 EMBEDDING_DIM = 25
 HIDDEN_DIM = 100
-check_point = os.path.join('pretrained_model/','37_0_054__885.pth.tar')#'36_0_057.pth.tar'
-train_mode = False
-GPU_available = False
+parser = OptionParser()
+parser.add_option("-c","--checkpoint", dest="checkpoint",help="loading checkpoint", type="string")
+(options,args)=parser.parse_args()
 
-print('check_point = ', check_point)
+if options.checkpoint == None:
+    check_point = ''# null str means training a model from scratch
+else:
+    check_point = os.path.join('pretrained_model/', options.checkpoint) # continue to train from the checkpoint
+if check_point != '':
+    print('checkpoint = ', check_point)
+
+train_mode = True
+GPU_available = False
 
 dataset = dataloader('train.txt', 'test.txt')
 training_data, test_data, all_tags_lst, tag_to_ix, word_to_ix = dataset.getData()
 print('training data size: ', len(training_data), '\ntest data size: ', len(test_data))
 
-# training_data looks like:
-# training_data = [(
-#     "the wall street journal reported today that apple corporation made money".split(),
-#     "B I I I O O O B I O O".split()
-# ), (
-#     "georgia tech is a university in georgia".split(),
-#     "B I O O O O B".split()
-# )]
 GPU_available = GPU_available and torch.cuda.is_available()
 print('GPU_available = ', GPU_available)
 print('len_vocab = ', len(word_to_ix), 'tag_to_ix', tag_to_ix)
@@ -38,23 +39,21 @@ if check_point:
     optimizer.load_state_dict(check_point['optimizer'])
     best_loss = check_point['best_loss']
     start_epoch = check_point['epoch']
-    print('loading checkpoint: start_epoch{0} best_loss{1}', start_epoch, best_loss)
+    print('loading checkpoint: start_epoch{0} best_loss{1}'.format(start_epoch, best_loss))
 else:
     start_epoch = 0
     best_loss = 100000000
+    print('start training!')
 F_value_best = 0
-# with torch.no_grad():
-#     precheck_sent = prepare_sequence(training_data[0][0], word_to_ix)
-#     precheck_tags = torch.tensor([tag_to_ix[t] for t in training_data[0][1]], dtype=torch.long)
-#     print('check output before training: ', [tags_lst[item] for item in model(precheck_sent)[1]])
+
 
 if GPU_available:
     model.cuda()
     print('moved model to GPU!!!')
-print('start training!')
+
 end = time.time()
 eps = 0.00000000001
-for epoch in range(start_epoch, 1000):
+for epoch in range(start_epoch, 100):
     losses = AverageMeter()
     for i, (sentence, tags) in enumerate(training_data):
         model.zero_grad()
