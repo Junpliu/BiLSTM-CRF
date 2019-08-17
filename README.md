@@ -1,6 +1,5 @@
-#BiLSTM-CRF for Named Entity Recognition(PyTorch)
+# BiLSTM-CRF for Named Entity Recognition(PyTorch)
 A simple implementation of BiLSTM-CRF for NER in PyTorch. 
-Including Chinese and English datasets. 
 ## Environment
 PyTorch 1.0 、python 3.7
 ## DataSet
