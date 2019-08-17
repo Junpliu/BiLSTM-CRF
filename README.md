@@ -5,7 +5,7 @@ PyTorch 1.0 、python 3.7
 ## DataSet
 English: **CONLL2003** [**dataset**](https://github.com/davidsbatista/NER-datasets/tree/master/CONLL2003)  [**paper**](https://aclweb.org/anthology/W03-0419)
 ## Model Architecture
-![avatar](model_architecture.png)
+![avatar](pictures/model_architecture.png)
 ## Introduction
 This model uses following 'BIO' tag system, that is, ['B-ORG', 'O', 'B-MISC', 'I-ORG', 'B-LOC', 'B-PER', 'I-PER', 'I-MISC', 'I-LOC'].  
 
@@ -26,8 +26,8 @@ enter `python main.py` to train a model from scratch.
 enter `python main.py -c 37_0_054__885.pth.tar` to train from the checkpoint "./pretrained_model/37_0_054__885.pth.tar".  
 
 ## Demo Output
-![avatar](demo_output.png)
-![avatar](demo_output2.png)
+![avatar](pictures/demo_output.png)
+![avatar](pictures/demo_output2.png)
 ## Result
 Loss value decreases to 0.058.  
 
