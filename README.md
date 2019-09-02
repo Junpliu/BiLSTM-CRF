@@ -28,10 +28,11 @@ enter `python main.py -c 37_0_054__885.pth.tar` to train from the checkpoint "./
 ## Demo Output
 ![avatar](pictures/demo_output.png)
 ![avatar](pictures/demo_output2.png)
-## Result
-Loss value decreases to 0.058.  
+## Result and evaluation
 
-F-value:0.8922
+**F-value:   0.8922**
+
+Loss value decreases to 0.058.  
 
 ## Reference
 [**Neural Architectures for Named Entity Recognition**](https://www.aclweb.org/anthology/N16-1030)
